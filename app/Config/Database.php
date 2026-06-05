@@ -201,6 +201,17 @@ class Database extends Config
             }
         }
 
+        $this->default['hostname'] = getenv('DATABASE_DEFAULT_HOSTNAME') ?: ($_ENV['DATABASE_DEFAULT_HOSTNAME'] ?? $_SERVER['DATABASE_DEFAULT_HOSTNAME'] ?? $this->default['hostname']);
+        $this->default['username'] = getenv('DATABASE_DEFAULT_USERNAME') ?: ($_ENV['DATABASE_DEFAULT_USERNAME'] ?? $_SERVER['DATABASE_DEFAULT_USERNAME'] ?? $this->default['username']);
+        $this->default['password'] = getenv('DATABASE_DEFAULT_PASSWORD') ?: ($_ENV['DATABASE_DEFAULT_PASSWORD'] ?? $_SERVER['DATABASE_DEFAULT_PASSWORD'] ?? $this->default['password']);
+        $this->default['database'] = getenv('DATABASE_DEFAULT_DATABASE') ?: ($_ENV['DATABASE_DEFAULT_DATABASE'] ?? $_SERVER['DATABASE_DEFAULT_DATABASE'] ?? $this->default['database']);
+        $this->default['sslmode'] = getenv('DATABASE_DEFAULT_SSLMODE') ?: ($_ENV['DATABASE_DEFAULT_SSLMODE'] ?? $_SERVER['DATABASE_DEFAULT_SSLMODE'] ?? $this->default['sslmode']);
+
+        $portOverride = getenv('DATABASE_DEFAULT_PORT') ?: ($_ENV['DATABASE_DEFAULT_PORT'] ?? $_SERVER['DATABASE_DEFAULT_PORT'] ?? null);
+        if (is_numeric($portOverride)) {
+            $this->default['port'] = (int) $portOverride;
+        }
+
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
         // we don't overwrite live data on accident.
