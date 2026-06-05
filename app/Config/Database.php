@@ -26,9 +26,9 @@ class Database extends Config
      */
     public array $default = [
         'DSN'        => '',
-        'hostname'   => '',
-        'username'   => '',
-        'password'   => '',
+        'hostname'   => 'aws-1-ap-southeast-2.pooler.supabase.com',
+        'username'   => 'postgres.fmplmicvpuxqdlfpnvkl',
+        'password'   => 'sWZAXrRLyqhr8zNI',
         'database'   => 'postgres',
         'schema'     => 'public',
         'DBDriver'   => 'Postgre',
