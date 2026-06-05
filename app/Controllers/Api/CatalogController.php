@@ -7,6 +7,7 @@ use App\Models\BrandModel;
 use App\Models\CityBoundaryModel;
 use App\Models\DistrictModel;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Database;
 use Throwable;
 
 class CatalogController extends BaseController
@@ -22,6 +23,32 @@ class CatalogController extends BaseController
         $this->districtModel = new DistrictModel();
     }
 
+    
+    public function diagnoseDb(): ResponseInterface
+    {
+        try {
+            $db = Database::connect();
+            $query = $db->query('SELECT current_database() AS db_name');
+            $row = $query->getRowArray();
+
+            return $this->response->setJSON([
+                'status' => true,
+                'message' => 'Koneksi database berhasil.',
+                'data' => [
+                    'hostname' => $db->hostname,
+                    'database' => $db->database,
+                    'port' => $db->port,
+                    'db_name' => $row['db_name'] ?? null,
+                ],
+            ]);
+        } catch (Throwable $exception) {
+            return $this->response->setStatusCode(500)->setJSON([
+                'status' => false,
+                'message' => 'Koneksi database gagal.',
+                'error' => $exception->getMessage(),
+            ]);
+        }
+    }
     public function brands(): ResponseInterface
     {
         return $this->response->setJSON([

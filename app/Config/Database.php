@@ -189,6 +189,18 @@ class Database extends Config
     {
         parent::__construct();
 
+        $databaseUrl = env('DATABASE_URL');
+        if (is_string($databaseUrl) && $databaseUrl !== '') {
+            $parts = parse_url($databaseUrl);
+            if (is_array($parts)) {
+                $this->default['hostname'] = $parts['host'] ?? $this->default['hostname'];
+                $this->default['username'] = isset($parts['user']) ? urldecode($parts['user']) : $this->default['username'];
+                $this->default['password'] = isset($parts['pass']) ? urldecode($parts['pass']) : $this->default['password'];
+                $this->default['database'] = isset($parts['path']) ? ltrim($parts['path'], '/') : $this->default['database'];
+                $this->default['port'] = $parts['port'] ?? $this->default['port'];
+            }
+        }
+
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
         // we don't overwrite live data on accident.
@@ -197,3 +209,4 @@ class Database extends Config
         }
     }
 }
+
