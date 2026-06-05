@@ -1,0 +1,27 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">GeoSC Medan Logo</title>
+  <desc id="desc">Logo GeoSC Medan bertema peta lokasi, smartphone, dan service center.</desc>
+  <defs>
+    <linearGradient id="pin" x1="18" y1="10" x2="110" y2="118" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2b61ff"/>
+      <stop offset="1" stop-color="#1637a3"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="42" y1="32" x2="86" y2="88" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#dff1ff"/>
+    </linearGradient>
+  </defs>
+  <path d="M64 8C40.804 8 22 26.804 22 50c0 28.726 42 70 42 70s42-41.274 42-70C106 26.804 87.196 8 64 8Z" fill="url(#pin)"/>
+  <circle cx="64" cy="50" r="27" fill="#ffffff" opacity=".14"/>
+  <rect x="45" y="28" width="38" height="53" rx="11" fill="#10264d"/>
+  <rect x="48.5" y="33" width="31" height="41" rx="8" fill="url(#screen)"/>
+  <circle cx="64" cy="76.5" r="2.8" fill="#8eb8ff"/>
+  <path d="M58 46h12M64 40v12" stroke="#2b61ff" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M34 57h-9M103 57h-9M48 20l-4-8M80 20l4-8M43 88l-9 8M85 88l9 8" stroke="#70cfff" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="25" cy="57" r="4" fill="#70cfff"/>
+  <circle cx="103" cy="57" r="4" fill="#70cfff"/>
+  <circle cx="43" cy="12" r="4" fill="#70cfff"/>
+  <circle cx="85" cy="12" r="4" fill="#70cfff"/>
+  <circle cx="34" cy="96" r="4" fill="#70cfff"/>
+  <circle cx="94" cy="96" r="4" fill="#70cfff"/>
+</svg>

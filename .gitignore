@@ -1,0 +1,13 @@
+# CI4
+/vendor/
+/writable/cache/*
+/writable/session/*
+/writable/logs/*
+/writable/uploads/*
+
+# Environment
+.env
+
+# Agent
+.agents
+skills-lock.json
