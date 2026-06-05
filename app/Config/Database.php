@@ -208,6 +208,32 @@ class Database extends Config
         $this->default['database'] = getenv('DATABASE_DEFAULT_DATABASE') ?: ($_ENV['DATABASE_DEFAULT_DATABASE'] ?? $_SERVER['DATABASE_DEFAULT_DATABASE'] ?? $this->default['database']);
         $this->default['sslmode'] = getenv('DATABASE_DEFAULT_SSLMODE') ?: ($_ENV['DATABASE_DEFAULT_SSLMODE'] ?? $_SERVER['DATABASE_DEFAULT_SSLMODE'] ?? $this->default['sslmode']);
 
+        $legacyHost = env('database.default.hostname');
+        $legacyUser = env('database.default.username');
+        $legacyPassword = env('database.default.password');
+        $legacyDatabase = env('database.default.database');
+        $legacySslMode = env('database.default.sslmode');
+        $legacyPort = env('database.default.port');
+
+        if (is_string($legacyHost) && trim($legacyHost) !== '') {
+            $this->default['hostname'] = trim($legacyHost);
+        }
+        if (is_string($legacyUser) && trim($legacyUser) !== '') {
+            $this->default['username'] = trim($legacyUser);
+        }
+        if (is_string($legacyPassword) && trim($legacyPassword) !== '') {
+            $this->default['password'] = trim($legacyPassword);
+        }
+        if (is_string($legacyDatabase) && trim($legacyDatabase) !== '') {
+            $this->default['database'] = trim($legacyDatabase);
+        }
+        if (is_string($legacySslMode) && trim($legacySslMode) !== '') {
+            $this->default['sslmode'] = trim($legacySslMode);
+        }
+        if (is_numeric($legacyPort)) {
+            $this->default['port'] = (int) $legacyPort;
+        }
+
         $portOverride = getenv('DATABASE_DEFAULT_PORT') ?: ($_ENV['DATABASE_DEFAULT_PORT'] ?? $_SERVER['DATABASE_DEFAULT_PORT'] ?? null);
         if (is_numeric($portOverride)) {
             $this->default['port'] = (int) $portOverride;
