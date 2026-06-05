@@ -26,6 +26,9 @@ class CatalogController extends BaseController
     
     public function diagnoseDb(): ResponseInterface
     {
+        $databaseUrl = getenv('DATABASE_URL') ?: ($_ENV['DATABASE_URL'] ?? $_SERVER['DATABASE_URL'] ?? env('DATABASE_URL'));
+        $config = new Database();
+
         try {
             $db = Database::connect();
             $query = $db->query('SELECT current_database() AS db_name');
@@ -39,6 +42,10 @@ class CatalogController extends BaseController
                     'database' => $db->database,
                     'port' => $db->port,
                     'db_name' => $row['db_name'] ?? null,
+                    'database_url_present' => $databaseUrl ? true : false,
+                    'runtime_hostname' => $config->default['hostname'] ?? null,
+                    'runtime_port' => $config->default['port'] ?? null,
+                    'runtime_username' => $config->default['username'] ?? null,
                 ],
             ]);
         } catch (Throwable $exception) {
@@ -46,6 +53,12 @@ class CatalogController extends BaseController
                 'status' => false,
                 'message' => 'Koneksi database gagal.',
                 'error' => $exception->getMessage(),
+                'data' => [
+                    'database_url_present' => $databaseUrl ? true : false,
+                    'runtime_hostname' => $config->default['hostname'] ?? null,
+                    'runtime_port' => $config->default['port'] ?? null,
+                    'runtime_username' => $config->default['username'] ?? null,
+                ],
             ]);
         }
     }
