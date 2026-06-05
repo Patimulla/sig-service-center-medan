@@ -25,27 +25,27 @@ class Database extends Config
      * @var array<string, mixed>
      */
     public array $default = [
-    'DSN'        => '',
-    'hostname'   => 'aws-1-ap-southeast-2.pooler.supabase.com',
-    'username'   => 'postgres.fmplmicvpuxqdlfpnvkl',
-    'password'   => 'sWZAXrRLyqhr8zNI',
-    'database'   => 'postgres',
-    'schema'     => 'public',
-    'DBDriver'   => 'Postgre',
-    'DBPrefix'   => '',
-    'pConnect'   => false,
-    'DBDebug'    => true,
-    'charset'    => 'utf8',
-    'sslmode'    => 'require',
-    'swapPre'    => '',
-    'failover'   => [],
-    'port'       => 5432,
-    'dateFormat' => [
-        'date'     => 'Y-m-d',
-        'datetime' => 'Y-m-d H:i:s',
-        'time'     => 'H:i:s',
-    ],
-];
+        'DSN'        => '',
+        'hostname'   => '',
+        'username'   => '',
+        'password'   => '',
+        'database'   => 'postgres',
+        'schema'     => 'public',
+        'DBDriver'   => 'Postgre',
+        'DBPrefix'   => '',
+        'pConnect'   => false,
+        'DBDebug'    => true,
+        'charset'    => 'utf8',
+        'sslmode'    => 'require',
+        'swapPre'    => '',
+        'failover'   => [],
+        'port'       => 5432,
+        'dateFormat' => [
+            'date'     => 'Y-m-d',
+            'datetime' => 'Y-m-d H:i:s',
+            'time'     => 'H:i:s',
+        ],
+    ];
 
 
     //    /**

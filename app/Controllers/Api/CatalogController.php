@@ -24,44 +24,7 @@ class CatalogController extends BaseController
     }
 
     
-    public function diagnoseDb(): ResponseInterface
-    {
-        $databaseUrl = getenv('DATABASE_URL') ?: ($_ENV['DATABASE_URL'] ?? $_SERVER['DATABASE_URL'] ?? env('DATABASE_URL'));
-        $config = new Database();
 
-        try {
-            $db = Database::connect();
-            $query = $db->query('SELECT current_database() AS db_name');
-            $row = $query->getRowArray();
-
-            return $this->response->setJSON([
-                'status' => true,
-                'message' => 'Koneksi database berhasil.',
-                'data' => [
-                    'hostname' => $db->hostname,
-                    'database' => $db->database,
-                    'port' => $db->port,
-                    'db_name' => $row['db_name'] ?? null,
-                    'database_url_present' => $databaseUrl ? true : false,
-                    'runtime_hostname' => $config->default['hostname'] ?? null,
-                    'runtime_port' => $config->default['port'] ?? null,
-                    'runtime_username' => $config->default['username'] ?? null,
-                ],
-            ]);
-        } catch (Throwable $exception) {
-            return $this->response->setStatusCode(500)->setJSON([
-                'status' => false,
-                'message' => 'Koneksi database gagal.',
-                'error' => $exception->getMessage(),
-                'data' => [
-                    'database_url_present' => $databaseUrl ? true : false,
-                    'runtime_hostname' => $config->default['hostname'] ?? null,
-                    'runtime_port' => $config->default['port'] ?? null,
-                    'runtime_username' => $config->default['username'] ?? null,
-                ],
-            ]);
-        }
-    }
     public function brands(): ResponseInterface
     {
         return $this->response->setJSON([

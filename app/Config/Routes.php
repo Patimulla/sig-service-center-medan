@@ -34,7 +34,6 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function ($
     $routes->get('service-center/filter', 'ServiceCenterController::filter');
     $routes->get('service-center/nearest', 'ServiceCenterController::nearest');
     $routes->get('service-center/(:segment)', 'ServiceCenterController::show/$1');
-    $routes->get('diagnose-db', 'CatalogController::diagnoseDb');
     $routes->get('brands', 'CatalogController::brands');
     $routes->get('districts', 'CatalogController::districts');
     $routes->get('city-boundary', 'CatalogController::cityBoundary');

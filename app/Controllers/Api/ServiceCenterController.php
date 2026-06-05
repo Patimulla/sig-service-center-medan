@@ -518,14 +518,14 @@ class ServiceCenterController extends BaseController
 
     protected function storeLocationPhoto(object $file): string
     {
-        $serviceRoleKey = trim((string) env('supabase.serviceRoleKey'));
+        $serviceRoleKey = trim($this->getSupabaseEnv('SUPABASE_SERVICE_ROLE_KEY', 'supabase.serviceRoleKey'));
         if ($serviceRoleKey === '') {
             throw new RuntimeException('Supabase service role key belum diisi di .env pada supabase.serviceRoleKey.');
         }
 
         $projectUrl = $this->getSupabaseProjectUrl();
-        $bucket = trim((string) env('supabase.storageBucket', 'service-center-photos'));
-        $pathPrefix = trim((string) env('supabase.storagePathPrefix', 'service-centers'));
+        $bucket = trim($this->getSupabaseEnv('SUPABASE_STORAGE_BUCKET', 'supabase.storageBucket', 'service-center-photos'));
+        $pathPrefix = trim($this->getSupabaseEnv('SUPABASE_STORAGE_PATH_PREFIX', 'supabase.storagePathPrefix', 'service-centers'));
         $objectPath = trim($pathPrefix . '/' . date('Y/m') . '/' . $file->getRandomName(), '/');
         $uploadUrl = rtrim($projectUrl, '/') . '/storage/v1/object/' . rawurlencode($bucket) . '/' . str_replace('%2F', '/', rawurlencode($objectPath));
         $mimeType = $file->getMimeType() ?: 'application/octet-stream';
@@ -570,7 +570,7 @@ class ServiceCenterController extends BaseController
 
     protected function getSupabaseProjectUrl(): string
     {
-        $projectUrl = trim((string) env('supabase.projectUrl'));
+        $projectUrl = trim($this->getSupabaseEnv('SUPABASE_PROJECT_URL', 'supabase.projectUrl'));
         if ($projectUrl !== '') {
             return $projectUrl;
         }
@@ -585,13 +585,13 @@ class ServiceCenterController extends BaseController
 
     protected function deleteStorageObjectByUrl(string $photoUrl): void
     {
-        $serviceRoleKey = trim((string) env('supabase.serviceRoleKey'));
+        $serviceRoleKey = trim($this->getSupabaseEnv('SUPABASE_SERVICE_ROLE_KEY', 'supabase.serviceRoleKey'));
         if ($serviceRoleKey === '' || $photoUrl === '') {
             return;
         }
 
         $projectUrl = rtrim($this->getSupabaseProjectUrl(), '/');
-        $bucket = trim((string) env('supabase.storageBucket', 'service-center-photos'));
+        $bucket = trim($this->getSupabaseEnv('SUPABASE_STORAGE_BUCKET', 'supabase.storageBucket', 'service-center-photos'));
         $publicPrefix = $projectUrl . '/storage/v1/object/public/' . rawurlencode($bucket) . '/';
 
         if (!str_starts_with($photoUrl, $publicPrefix)) {
