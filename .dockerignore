@@ -1,0 +1,11 @@
+﻿.git
+.gitignore
+.agents
+tests
+writable/*
+!writable/.gitkeep
+!writable/index.html
+node_modules
+vendor/bin
+README.md
+skills-lock.json
