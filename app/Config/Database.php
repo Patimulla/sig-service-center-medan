@@ -189,9 +189,9 @@ class Database extends Config
     {
         parent::__construct();
 
-        $databaseUrl = env('DATABASE_URL');
+        $databaseUrl = getenv('DATABASE_URL') ?: ($_ENV['DATABASE_URL'] ?? $_SERVER['DATABASE_URL'] ?? env('DATABASE_URL'));
         if (is_string($databaseUrl) && $databaseUrl !== '') {
-            $parts = parse_url($databaseUrl);
+            $parts = parse_url(trim($databaseUrl));
             if (is_array($parts)) {
                 $this->default['hostname'] = $parts['host'] ?? $this->default['hostname'];
                 $this->default['username'] = isset($parts['user']) ? urldecode($parts['user']) : $this->default['username'];
