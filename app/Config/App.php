@@ -6,6 +6,29 @@ use CodeIgniter\Config\BaseConfig;
 
 class App extends BaseConfig
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $railwayDomain = env('RAILWAY_PUBLIC_DOMAIN');
+        if (is_string($railwayDomain) && $railwayDomain !== '') {
+            $this->baseURL = 'https://' . rtrim($railwayDomain, '/') . '/';
+            $this->indexPage = '';
+            $this->forceGlobalSecureRequests = true;
+
+            return;
+        }
+
+        $configuredBaseURL = env('APP_BASE_URL');
+        if (is_string($configuredBaseURL) && $configuredBaseURL !== '') {
+            $this->baseURL = rtrim($configuredBaseURL, '/') . '/';
+        }
+
+        $configuredIndexPage = env('APP_INDEX_PAGE');
+        if (is_string($configuredIndexPage)) {
+            $this->indexPage = $configuredIndexPage;
+        }
+    }
     /**
      * --------------------------------------------------------------------------
      * Base Site URL
