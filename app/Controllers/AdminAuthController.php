@@ -67,8 +67,16 @@ class AdminAuthController extends BaseController
 
     private function authenticateWithSupabase(string $email, string $password): array
     {
-        $projectUrl = rtrim(trim($this->getSupabaseEnv('SUPABASE_PROJECT_URL', 'supabase.projectUrl')), '/');
-        $serviceRoleKey = trim($this->getSupabaseEnv('SUPABASE_SERVICE_ROLE_KEY', 'supabase.serviceRoleKey'));
+        $projectUrl = rtrim(trim($this->getSupabaseEnv(
+            'SUPABASE_PROJECT_URL',
+            'supabase.projectUrl',
+            'https://fmplmicvpuxqdlfpnvkl.supabase.co'
+        )), '/');
+        $serviceRoleKey = trim($this->getSupabaseEnv(
+            'SUPABASE_SERVICE_ROLE_KEY',
+            'supabase.serviceRoleKey',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZtcGxtaWN2cHV4cWRsZnBudmtsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3ODkxNDY1NSwiZXhwIjoyMDk0NDkwNjU1fQ.yd5obMY0fY2WM7WjtngQTLSDxBO6CgjVf4Jsxnf0I5Q'
+        ));
 
         if ($projectUrl === '' || $serviceRoleKey === '') {
             throw new RuntimeException('Konfigurasi Supabase Auth belum lengkap.');
