@@ -67,8 +67,8 @@ class AdminAuthController extends BaseController
 
     private function authenticateWithSupabase(string $email, string $password): array
     {
-        $projectUrl = rtrim(trim((string) env('supabase.projectUrl')), '/');
-        $serviceRoleKey = trim((string) env('supabase.serviceRoleKey'));
+        $projectUrl = rtrim(trim($this->getSupabaseEnv('SUPABASE_PROJECT_URL', 'supabase.projectUrl')), '/');
+        $serviceRoleKey = trim($this->getSupabaseEnv('SUPABASE_SERVICE_ROLE_KEY', 'supabase.serviceRoleKey'));
 
         if ($projectUrl === '' || $serviceRoleKey === '') {
             throw new RuntimeException('Konfigurasi Supabase Auth belum lengkap.');
@@ -116,5 +116,30 @@ class AdminAuthController extends BaseController
         }
 
         return $decoded;
+    }
+
+    private function getSupabaseEnv(string $primaryKey, string $legacyKey, string $default = ''): string
+    {
+        $primary = trim((string) getenv($primaryKey));
+        if ($primary !== '') {
+            return $primary;
+        }
+
+        $serverValue = $_SERVER[$primaryKey] ?? '';
+        if (is_string($serverValue) && trim($serverValue) !== '') {
+            return trim($serverValue);
+        }
+
+        $envValue = $_ENV[$primaryKey] ?? '';
+        if (is_string($envValue) && trim($envValue) !== '') {
+            return trim($envValue);
+        }
+
+        $legacy = trim((string) env($legacyKey));
+        if ($legacy !== '') {
+            return $legacy;
+        }
+
+        return $default;
     }
 }
